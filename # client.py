@@ -1,6 +1,6 @@
 # client.py
 
-# this is a simple in-memory list to store clients
+# A simple in-memory list to store clients
 clients = []
 
 def add_client(name, phone):
@@ -44,14 +44,14 @@ def list_clients():
 from client import add_client, update_client, search_client, list_clients
 
 # Add some clients
-add_client("Spencer Reid", "123456789")
-add_client("Dean Winchester", "987654321")
+add_client("John Doe", "123456789")
+add_client("Jane Smith", "987654321")
 
 # Update a client
-update_client("Spencer Reid", "111222333")
+update_client("John Doe", "111222333")
 
 # Search for a client
-print(search_client("Dean"))
+print(search_client("Jane"))
 
 # List all clients
 print(list_clients())
