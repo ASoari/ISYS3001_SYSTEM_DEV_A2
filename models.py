@@ -1,6 +1,5 @@
 import sqlite3
 
-# Simple connection setup
 def get_db_connection():
     conn = sqlite3.connect('dunbar_vet.db')
     return conn
@@ -9,7 +8,7 @@ def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # 1. Create Clients Table
+    # 1. Clients Table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS clients (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,7 +18,7 @@ def init_db():
         )
     ''')
     
-    # 2. Create Properties Table (User Story 1)
+    # 2. Properties Table (US1)
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS properties (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,12 +29,22 @@ def init_db():
             FOREIGN KEY (client_id) REFERENCES clients (id)
         )
     ''')
+
+    # 3. Farm Visits Table (US2)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS farm_visits (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            property_id INTEGER NOT NULL,
+            visit_date TEXT NOT NULL,
+            start_time TEXT NOT NULL,
+            duration_hours REAL NOT NULL,
+            notes TEXT,
+            FOREIGN KEY (property_id) REFERENCES properties (id)
+        )
+    ''')
     
-    # Insert sample default client if none exists
     cursor.execute("SELECT * FROM clients")
-    existing_clients = cursor.fetchall()
-    
-    if len(existing_clients) == 0:
+    if len(cursor.fetchall()) == 0:
         cursor.execute(
             "INSERT INTO clients (name, client_type, phone) VALUES (?, ?, ?)",
             ('John Dunbar', 'Rural Business', '0412345678')
@@ -46,4 +55,4 @@ def init_db():
 
 if __name__ == "__main__":
     init_db()
-    print("Database initialization complete.")
+    print("Database initialization complete for US2.")
