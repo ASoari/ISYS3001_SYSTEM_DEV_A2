@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Consultation - Dunbar Vet Clinic</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <div class="mb-4">
+        <h1>Edit Consultation</h1>
+        <p class="text-muted">
+            Change the date, start time or notes for this appointment.
+        </p>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <!-- Animal -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Animal ID
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ consultation[1] }}"
+                        disabled
+                    >
+
+                </div>
+
+
+                <!-- Consultation Date -->
+                <div class="mb-3">
+
+                    <label for="consultation_date" class="form-label">
+                        Consultation Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="consultation_date"
+                        name="consultation_date"
+                        class="form-control"
+                        value="{{ consultation[2] }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Start Time -->
+                <div class="mb-3">
+
+                    <label for="start_time" class="form-label">
+                        Start Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="start_time"
+                        name="start_time"
+                        class="form-control"
+                        value="{{ consultation[3] }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Duration -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Duration
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ consultation[4] }} minutes"
+                        disabled
+                    >
+
+                </div>
+
+
+                <!-- Notes -->
+                <div class="mb-3">
+
+                    <label for="notes" class="form-label">
+                        Consultation Notes
+                    </label>
+
+                    <textarea
+                        id="notes"
+                        name="notes"
+                        class="form-control"
+                        rows="3"
+                    >{{ consultation[5] or '' }}</textarea>
+
+                </div>
+
+
+                <!-- Current Status -->
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Current Status
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ consultation[6] }}"
+                        disabled
+                    >
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Changes
+                    </button>
+
+                    <a
+                        href="/schedule?date={{ consultation[2] }}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Cancel Editing
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

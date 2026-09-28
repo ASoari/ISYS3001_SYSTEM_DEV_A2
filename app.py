@@ -172,5 +172,107 @@ def daily_schedule():
         selected_date=selected_date
     )
 
+
+# Feature 3: Change an Appointment
+@app.route("/consultation/<int:consultation_id>/edit", methods=["GET", "POST"])
+def edit_consultation(consultation_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Find the consultation being edited
+    cursor.execute("""
+        SELECT
+            id,
+            animal_id,
+            consultation_date,
+            start_time,
+            duration_minutes,
+            notes,
+            status
+        FROM consultations
+        WHERE id = ?
+    """, (consultation_id,))
+
+    consultation = cursor.fetchone()
+
+    if consultation is None:
+        conn.close()
+        return "Consultation not found", 404
+
+    if request.method == "POST":
+        consultation_date = request.form.get("consultation_date")
+        start_time = request.form.get("start_time")
+        notes = request.form.get("notes")
+
+        if consultation_date and start_time:
+            cursor.execute("""
+                UPDATE consultations
+                SET consultation_date = ?,
+                    start_time = ?,
+                    notes = ?
+                WHERE id = ?
+            """, (
+                consultation_date,
+                start_time,
+                notes,
+                consultation_id
+            ))
+
+            conn.commit()
+            conn.close()
+
+            return redirect(
+                url_for(
+                    "daily_schedule",
+                    date=consultation_date
+                )
+            )
+
+    conn.close()
+
+    return render_template(
+        "edit_consultation.html",
+        consultation=consultation
+    )
+
+
+# Feature 3: Cancel an Appointment
+@app.route("/consultation/<int:consultation_id>/cancel", methods=["POST"])
+def cancel_consultation(consultation_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Get the consultation date before cancelling
+    cursor.execute("""
+        SELECT consultation_date
+        FROM consultations
+        WHERE id = ?
+    """, (consultation_id,))
+
+    consultation = cursor.fetchone()
+
+    if consultation is None:
+        conn.close()
+        return "Consultation not found", 404
+
+    consultation_date = consultation[0]
+
+    # Keep the appointment but change its status
+    cursor.execute("""
+        UPDATE consultations
+        SET status = 'Cancelled'
+        WHERE id = ?
+    """, (consultation_id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(
+        url_for(
+            "daily_schedule",
+            date=consultation_date
+        )
+    )
+
 if __name__ == "__main__":
     app.run(debug=True)
