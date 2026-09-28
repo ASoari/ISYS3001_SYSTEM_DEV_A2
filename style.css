@@ -1,0 +1,155 @@
+/* Dunbar Veterinary Clinic
+   Client Appointment Interface
+   Story: MSD426IBSU2-12
+*/
+
+/* General page styling */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333333;
+}
+
+
+/* Header */
+header {
+    background-color: #2f6f5e;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+
+/* Main page area */
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+
+/* Appointment section */
+.appointment-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-container h2 {
+    margin-top: 0;
+    color: #2f6f5e;
+}
+
+
+/* Client selection */
+.client-selection {
+    margin-top: 25px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #eef5f2;
+    border-radius: 6px;
+}
+
+.client-selection label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.client-selection select {
+    padding: 10px;
+    min-width: 250px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.client-selection button {
+    padding: 10px 18px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2f6f5e;
+    color: white;
+    cursor: pointer;
+}
+
+.client-selection button:hover {
+    background-color: #245748;
+}
+
+
+/* Appointment results */
+#appointmentResults {
+    margin-top: 20px;
+}
+
+#appointmentResults h3 {
+    color: #2f6f5e;
+}
+
+
+/* Appointment table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+th {
+    background-color: #2f6f5e;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+
+/* No appointments / selection message */
+#noAppointmentsMessage {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #555555;
+}
+
+
+/* Smaller screens */
+@media (max-width: 700px) {
+
+    .client-selection select {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .client-selection button {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
