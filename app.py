@@ -84,7 +84,93 @@ def book_consultation():
     )
 
 
+# Feature 2: View Daily Schedule
+@app.route("/schedule")
+def daily_schedule():
+    selected_date = request.args.get("date")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    consultations = []
+    farm_visits = []
+
+    if selected_date:
+        # Get in-clinic consultations for the selected date
+        cursor.execute("""
+            SELECT
+                id,
+                animal_id,
+                consultation_date,
+                start_time,
+                duration_minutes,
+                notes,
+                status
+            FROM consultations
+            WHERE consultation_date = ?
+        """, (selected_date,))
+
+        for row in cursor.fetchall():
+            consultations.append({
+                "id": row[0],
+                "type": "In-clinic Consultation",
+                "details": f"Animal ID: {row[1]}",
+                "date": row[2],
+                "start_time": row[3],
+                "duration": f"{row[4]} minutes",
+                "notes": row[5],
+                "status": row[6]
+            })
+
+        # Get farm visits if the teammate's table exists
+        cursor.execute("""
+            SELECT name
+            FROM sqlite_master
+            WHERE type='table' AND name='farm_visits'
+        """)
+
+        farm_visit_table = cursor.fetchone()
+
+        if farm_visit_table:
+            cursor.execute("""
+                SELECT
+                    farm_visits.id,
+                    farm_visits.visit_date,
+                    farm_visits.start_time,
+                    farm_visits.duration_hours,
+                    farm_visits.notes,
+                    properties.property_name
+                FROM farm_visits
+                JOIN properties
+                    ON farm_visits.property_id = properties.id
+                WHERE farm_visits.visit_date = ?
+            """, (selected_date,))
+
+            for row in cursor.fetchall():
+                farm_visits.append({
+                    "id": row[0],
+                    "type": "Farm Visit",
+                    "details": row[5],
+                    "date": row[1],
+                    "start_time": row[2],
+                    "duration": f"{row[3]} hours",
+                    "notes": row[4],
+                    "status": "Scheduled"
+                })
+
+    conn.close()
+
+    # Combine both appointment types
+    schedule = consultations + farm_visits
+
+    # Sort all appointments by start time
+    schedule.sort(key=lambda appointment: appointment["start_time"])
+
+    return render_template(
+        "daily_schedule.html",
+        schedule=schedule,
+        selected_date=selected_date
+    )
+
 if __name__ == "__main__":
     app.run(debug=True)
-
-       
