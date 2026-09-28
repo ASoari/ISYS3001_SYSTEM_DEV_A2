@@ -55,4 +55,4 @@ def init_db():
 
 if __name__ == "__main__":
     init_db()
-    print("Database initialization complete for US2.")
+    print("Database initialization complete for US1 (Properties) and US2 (Farm Visits).")
