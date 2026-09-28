@@ -1,11 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>My First Web App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dunbar Veterinary Clinic</title>
+
+    <!-- Connect our CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>Welcome to My Web App!</h1>
-  <p>This is my assignment project using GitHub.</p>
+
+    <header>
+        <h1>Dunbar Veterinary Clinic</h1>
+        <p>Appointment Management System</p>
+    </header>
+
+    <main>
+
+        <section class="appointment-container">
+
+            <h2>Client Appointments</h2>
+
+            <p>
+                Select a client to view all appointments associated
+                with that client.
+            </p>
+
+            <!-- Client selection -->
+            <div class="client-selection">
+
+                <label for="clientSelect">
+                    Select Client:
+                </label>
+
+                <select id="clientSelect">
+
+                    <option value="">
+                        -- Select a Client --
+                    </option>
+
+                    <option value="1">
+                        Bridie & Tom Callaghan
+                    </option>
+
+                    <option value="2">
+                        Sarah Williams
+                    </option>
+
+                    <option value="3">
+                        Michael Brown
+                    </option>
+
+                </select>
+
+                <button id="viewAppointmentsBtn">
+                    View Appointments
+                </button>
+
+            </div>
+
+
+            <!-- Appointment results -->
+
+            <div id="appointmentResults">
+
+                <h3>Appointments</h3>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Details</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="appointmentTableBody">
+
+                        <!-- JavaScript will add appointments here -->
+
+                    </tbody>
+
+                </table>
+
+
+                <!-- Message shown when no appointments exist -->
+
+                <p id="noAppointmentsMessage">
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Connect our JavaScript file -->
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>
