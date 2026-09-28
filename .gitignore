@@ -1,0 +1,10 @@
+# Python generated files
+__pycache__/
+*.pyc
+
+# Local SQLite database
+dunbar_vet.db
+
+# Virtual environments
+.venv/
+venv/
